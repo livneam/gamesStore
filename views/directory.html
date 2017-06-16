@@ -1,3 +1,4 @@
+<h1>Game catalog</h1>
 <div class="content">
       <button ng-click="order= 'gameName' ">order by name</button>
       <button ng-click="order= 'publisher'">order by publisher</button>
@@ -12,7 +13,8 @@
       </li>
     </ul>
     <form ng-submit="addGame()">
-      <input type="text" placeholder="gameName" ng-model="newgame.gameName"/>
+      <h2>Add a new game</h2>
+      <input type="text" placeholder="game name" ng-model="newgame.gameName"/>
       <input type="text" placeholder="publisher" ng-model="newgame.publisher"/>
       <input type="text" placeholder="price" ng-model="newgame.price"/>
       <input type="submit"  value="Add new game"/>

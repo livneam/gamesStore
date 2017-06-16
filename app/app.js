@@ -14,7 +14,10 @@ myStore.config(['$routeProvider',function($routeProvider){
     controller: 'StoreController'
   })
   .when('/postLoginPage',{
-    templateUrl: 'views/postLoginPage.html',    
+    templateUrl: 'views/postLoginPage.html',
+  })
+  .when('/about',{
+    templateUrl: 'views/about.html',    
   })
   .otherwise({
     redirectTo: '/'
