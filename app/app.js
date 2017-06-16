@@ -19,7 +19,8 @@ myStore.config(['$routeProvider',function($routeProvider){
 
 myStore.controller('StoreController',['$scope','$http',function($scope,$http){
 
- $http.get('data/games.json').success(function(data)
+self.url = 'http://localhost:5001/games/getAll_Items';
+ $http.get(self.url).success(function(data)
 {
   $scope.games=data;
 });

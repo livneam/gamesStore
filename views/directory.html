@@ -1,14 +1,14 @@
 <div class="content">
-      <button ng-click="order='name'">order by name</button>
-      <button ng-click="order='belt'">order by belt</button>
+      <button ng-click="order= 'gameName' ">order by name</button>
+      <button ng-click="order= 'publisher'">order by publisher</button>
     <input type="text" ng-model="search" placeholder="search for a game">
     <ul>
-      <li ng-repeat="game in games | orderBy: order | filter: search" ng-show="game.available">
+      <li ng-repeat="game in games | orderBy: order | filter: search">
         <img ng-src="{{game.thumb}}" style="margin: -12px 10px 0 0; float:left ;width:50px;"
              ng-show="game.thumb"/>
-        <h3>{{game.name}} - {{game.rate | currency}}</h3>
+        <h3>{{game.gameName}} ,{{game.category}}</h3>
         <div class="remove" ng-click="removeGame(game)">x</div>
-        <span class="belt" style="background:{{game.belt}}">{{game.belt}} belt</span>
+        <span class="publisher" style="background:{{game.belt}}">{{game.publisher}}</span>
       </li>
     </ul>
     <form ng-submit="addGame()">
