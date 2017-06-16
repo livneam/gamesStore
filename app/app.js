@@ -13,6 +13,9 @@ myStore.config(['$routeProvider',function($routeProvider){
     templateUrl: 'views/directory.html',
     controller: 'StoreController'
   })
+  .when('/postLoginPage',{
+    templateUrl: 'views/postLoginPage.html',    
+  })
   .otherwise({
     redirectTo: '/'
   });
@@ -46,19 +49,28 @@ myStore.controller('StoreController',['$scope','$http',function($scope,$http){
 }]);
 
 
-myStore.controller('LoginController',['$scope','$http',function($scope,$http){
+myStore.controller('LoginController',['$scope','$http','$location',function($scope,$http,$location){
   self.url = 'http://localhost:5001/users/login';
+  self.getUser = 'http://localhost:5001/users/getUserByID?userName=';
 $scope.login = function()
 {
-  alert($scope.newlogin.userName);
+  //alert($scope.newlogin.userName); alert to check the name of the user
   //alert($scope.newlogin.password.length); for checking length
   $http.post(self.url,{userName:$scope.newlogin.userName,password:$scope.newlogin.password})
   .success(function(data){
     $scope.answer = data;
     alert(data);
+    self.getUser += $scope.newlogin.userName;
+    //alert(self.getUser);
+    $http.get(self.getUser).success(function(userData){
+      var user = userData['0'];
+      console.log(user['userName']);
+      $location.path('postLoginPage')
+    });
   }).error(function (data) {
       alert(data);
 });
+
 
 }
 
