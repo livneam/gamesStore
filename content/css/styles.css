@@ -155,7 +155,16 @@ main.ng-enter.ng-enter-active{
   transform: translateX(0);
 }
 
-#game-list li.ng-leave.ng-leave-active{
+#game-list li.ng-leave .ng-leave-active{
   opacity: 0;
   transform: translateX(-100%);
+}
+
+input.ng-invalid.ng-touched {
+  border: 2px solid red;
+}
+
+input[disabled="disabled"]{
+  opacity: 0.4;
+  cursor: not-allowed !important;
 }
