@@ -4,11 +4,11 @@
     <input type="text" ng-model="search" placeholder="search for a game">
     <ul>
       <li ng-repeat="game in games | orderBy: order | filter: search">
-        <img ng-src="{{game.thumb}}" style="margin: -12px 10px 0 0; float:left ;width:50px;"
-             ng-show="game.thumb"/>
+        <img ng-src="{{game.picPath}}" style="margin: -12px 10px 0 0; float:left ;width:50px;"
+             ng-show="game.picPath"/>
         <h3>{{game.gameName}} ,{{game.category}}</h3>
         <div class="remove" ng-click="removeGame(game)">x</div>
-        <span class="publisher" style="background:{{game.belt}}">{{game.publisher}}</span>
+        <span class="publisher">{{game.publisher}}</span>
       </li>
     </ul>
     <form ng-submit="addGame()">

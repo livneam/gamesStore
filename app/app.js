@@ -22,7 +22,7 @@ myStore.controller('StoreController',['$scope','$http',function($scope,$http){
 self.url = 'http://localhost:5001/games/getAll_Items';
  $http.get(self.url).success(function(data)
 {
-  $scope.games=data;
+  $scope.games=data;  
 });
 
  $scope.removeGame = function(game){
