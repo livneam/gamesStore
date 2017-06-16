@@ -1,4 +1,4 @@
-var myStore = angular.module("myStore",['ngRoute']);
+var myStore = angular.module("myStore",['ngRoute','ngAnimate']);
 
 myStore.config(['$routeProvider',function($routeProvider){
   $routeProvider
@@ -22,7 +22,7 @@ myStore.controller('StoreController',['$scope','$http',function($scope,$http){
 self.url = 'http://localhost:5001/games/getAll_Items';
  $http.get(self.url).success(function(data)
 {
-  $scope.games=data;  
+  $scope.games=data;
 });
 
  $scope.removeGame = function(game){
@@ -32,14 +32,14 @@ self.url = 'http://localhost:5001/games/getAll_Items';
 
   $scope.addGame = function(){
     $scope.games.push({
-      name: $scope.newgame.name,
-      belt: $scope.newgame.belt,
-      rate: parseInt($scope.newgame.rate),
+      gameName: $scope.newgame.gameName,
+      publisher: $scope.newgame.publisher,
+      price: parseInt($scope.newgame.price),
       available:true
     });
-    $scope.newgame.name = "";
-    $scope.newgame.belt = "";
-    $scope.newgame.rate = "";
+    $scope.newgame.gameName = "";
+    $scope.newgame.publisher = "";
+    $scope.newgame.price = "";
    }
 
 }]);

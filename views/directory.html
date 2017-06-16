@@ -2,19 +2,19 @@
       <button ng-click="order= 'gameName' ">order by name</button>
       <button ng-click="order= 'publisher'">order by publisher</button>
     <input type="text" ng-model="search" placeholder="search for a game">
-    <ul>
-      <li ng-repeat="game in games | orderBy: order | filter: search">
+    <ul id="game-list">
+      <li  ng-repeat="game in games | orderBy: order | filter: search">
         <img ng-src="{{game.picPath}}" style="margin: -12px 10px 0 0; float:left ;width:50px;"
              ng-show="game.picPath"/>
-        <h3>{{game.gameName}} ,{{game.category}}</h3>
+        <h3>{{game.gameName}} ,{{game.publisher}}</h3>
         <div class="remove" ng-click="removeGame(game)">x</div>
-        <span class="publisher">{{game.publisher}}</span>
+        <span class="price">{{game.price | currency}}</span>
       </li>
     </ul>
     <form ng-submit="addGame()">
-      <input type="text" placeholder="name" ng-model="newgame.name"/>
-      <input type="text" placeholder="belt" ng-model="newgame.belt"/>
-      <input type="text" placeholder="rate" ng-model="newgame.rate"/>
+      <input type="text" placeholder="gameName" ng-model="newgame.gameName"/>
+      <input type="text" placeholder="publisher" ng-model="newgame.publisher"/>
+      <input type="text" placeholder="price" ng-model="newgame.price"/>
       <input type="submit"  value="Add new game"/>
     </form>
 </div>
