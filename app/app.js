@@ -3,7 +3,8 @@ var myStore = angular.module("myStore",['ngRoute','ngAnimate']);
 myStore.config(['$routeProvider',function($routeProvider){
   $routeProvider
   .when('/home',{
-    templateUrl: 'views/home.html'
+    templateUrl: 'views/home.html',
+    controller: 'postLoginPageCtrl'
   })
   .when('/login',{
     templateUrl: 'views/login.html',
@@ -19,15 +20,16 @@ myStore.config(['$routeProvider',function($routeProvider){
   })
   .when('/about',{
     templateUrl: 'views/about.html',
+    controller: 'postLoginPageCtrl'
   })
   .otherwise({
-    redirectTo: '/'
+    redirectTo: '/home',
+    controller: 'postLoginPageCtrl'
   });
 }]);
 
-myStore.controller('StoreController',['$scope','$http',function($scope,$http){
 
-
+myStore.controller('StoreController',['$scope','$http','$rootScope',function($scope,$http,$rootScope){
   self.url = 'http://localhost:5001/games/getAll_Items';
   $http.get(self.url).success(function(data)
   {
@@ -39,7 +41,6 @@ myStore.controller('StoreController',['$scope','$http',function($scope,$http){
     });
 
   });
-
  $scope.removeGame = function(game){
     var removeGame = $scope.games.indexOf(game);
     $scope.games.splice(removeGame,1);
@@ -58,7 +59,6 @@ myStore.controller('StoreController',['$scope','$http',function($scope,$http){
    }
 
    $scope.gameDetails = function(game){
-     alert(game);     
      self.gameUrl = 'http://localhost:5001/games/getItemByID?gameName=';
      self.gameUrl += game.gameName;
      $http.get(self.gameUrl).success(function(data)
@@ -66,12 +66,14 @@ myStore.controller('StoreController',['$scope','$http',function($scope,$http){
        alert(JSON.stringify(data['0']));
      });
    }
+
 }]);
 
 
-myStore.controller('LoginController',['$scope','$http','$location',function($scope,$http,$location){
+myStore.controller('LoginController',['$scope','$http','$location','$rootScope',function($scope,$http,$location,$rootScope){
   self.url = 'http://localhost:5001/users/login';
   self.getUser = 'http://localhost:5001/users/getUserByID?userName=';
+
 
 $scope.login = function(){
   //alert($scope.newlogin.userName); alert to check the name of the user
@@ -81,6 +83,8 @@ $scope.login = function(){
     $scope.answer = data;
     alert(data);
     self.getUser += $scope.newlogin.userName;
+    $rootScope.currentUser = $scope.newlogin.userName;
+
     //alert(self.getUser);
     $http.get(self.getUser).success(function(userData){
       var user = userData['0'];
@@ -89,11 +93,15 @@ $scope.login = function(){
     });
   }).error(function (data) {
       alert(data);
+
 });
 }
 }]); //controller ends
 
-myStore.controller('postLoginPageCtrl',['$scope','$http','$location',function($scope,$http,$location){
+myStore.controller('postLoginPageCtrl',['$scope','$http','$location','$rootScope',function($scope,$http,$location,$rootScope){
+  if(!$rootScope.currentUser)  {
+    $rootScope.currentUser = "guest";
+  }
   self.url2 = 'http://localhost:5001/games/topfivegames';
   self.url3 = 'http://localhost:5001/games/getLastMonthItems';
 

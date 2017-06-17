@@ -4,7 +4,7 @@
       <li  ng-repeat="game in topGames">
         <img ng-src="{{game.picPath}}" style="margin: -12px 10px 0 0; float:left ;width:50px;"
              ng-show="game.picPath"/>
-        <h3>{{game.gameName}} ,{{game.Total}}</h3>
+        <h3>{{game.gameName}} ,sales last week: {{game.Total}}</h3>
       </li>
     </ul>
 </div>

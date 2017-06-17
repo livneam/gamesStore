@@ -4,9 +4,9 @@
       <button ng-click="order= 'category'">order by category</button>
       <button ng-click="order= 'publisher'">order by publisher</button>
     <input type="text" ng-model="search" placeholder="search for a game">
-    <input type="text" ng-model="searchPublisher" placeholder="search for a publisher">
+    <input type="text" ng-model="searchCategory" placeholder="search for a category">
     <ul id="game-list">
-      <li ng-repeat="game in games | orderBy: order | filter: {gameName : search , publisher : searchPublisher}">
+      <li ng-repeat="game in games | orderBy: order | filter: {gameName : search , category : searchCategory}">
         <img class="details" ng-src="{{game.picPath}}" style="margin: -12px 10px 0 0; float:left ;width:50px;"
              ng-show="game.picPath" ng-click="gameDetails(game)"/>
         <h3>{{game.gameName}} , By: {{game.publisher}}</h3>
