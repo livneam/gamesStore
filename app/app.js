@@ -27,10 +27,17 @@ myStore.config(['$routeProvider',function($routeProvider){
 
 myStore.controller('StoreController',['$scope','$http',function($scope,$http){
 
+
   self.url = 'http://localhost:5001/games/getAll_Items';
   $http.get(self.url).success(function(data)
   {
     $scope.games=data;
+    self.url2 = 'http://localhost:5001/users/getRecomandation?userName=pavel'; //todo: change to be according to userName;
+    $http.get(self.url2).success(function(data)
+    {
+      $scope.Recgames=data;
+    });
+
   });
 
  $scope.removeGame = function(game){
@@ -50,12 +57,22 @@ myStore.controller('StoreController',['$scope','$http',function($scope,$http){
     $scope.newgame.price = "";
    }
 
+   $scope.gameDetails = function(game){
+     alert(game);     
+     self.gameUrl = 'http://localhost:5001/games/getItemByID?gameName=';
+     self.gameUrl += game.gameName;
+     $http.get(self.gameUrl).success(function(data)
+     {
+       alert(JSON.stringify(data['0']));
+     });
+   }
 }]);
 
 
 myStore.controller('LoginController',['$scope','$http','$location',function($scope,$http,$location){
   self.url = 'http://localhost:5001/users/login';
   self.getUser = 'http://localhost:5001/users/getUserByID?userName=';
+
 $scope.login = function(){
   //alert($scope.newlogin.userName); alert to check the name of the user
   //alert($scope.newlogin.password.length); for checking length
@@ -77,23 +94,13 @@ $scope.login = function(){
 }]); //controller ends
 
 myStore.controller('postLoginPageCtrl',['$scope','$http','$location',function($scope,$http,$location){
-self.url = 'http://localhost:5001/users/getRecomandation?userName=Amit';
-self.url2 = 'http://localhost:5001/games/topfivegames';
-self.url3 = 'http://localhost:5001/games/getLastMonthItems';
+  self.url2 = 'http://localhost:5001/games/topfivegames';
+  self.url3 = 'http://localhost:5001/games/getLastMonthItems';
 
-$http.get(self.url).success(function(data)
-{
-  $scope.Recgames=data;
-  $http.get(self.url2).success(function(recData)
-  {
-    $scope.topGames=recData;
-    $http.get(self.url3).success(function(lastMonth)
-    {
-      $scope.MonthGames=lastMonth;      
-    });
+  $http.get(self.url2).success(function(recData){
+      $scope.topGames=recData;
+      $http.get(self.url3).success(function(lastMonth){
+        $scope.MonthGames=lastMonth;
+      });
   });
-});
-
-
-
 }]);

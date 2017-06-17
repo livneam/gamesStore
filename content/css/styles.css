@@ -128,6 +128,10 @@ main{
   margin-left: 10px;
 }
 
+.details{
+  cursor: pointer;
+}
+
 /*Anumation*/
 main.ng-enter{
   transition: 0.5s linear all;
