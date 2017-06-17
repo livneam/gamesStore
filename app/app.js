@@ -74,28 +74,29 @@ myStore.controller('LoginController',['$scope','$http','$location','$rootScope',
   self.url = 'http://localhost:5001/users/login';
   self.getUser = 'http://localhost:5001/users/getUserByID?userName=';
 
-
-$scope.login = function(){
-  //alert($scope.newlogin.userName); alert to check the name of the user
-  //alert($scope.newlogin.password.length); for checking length
-  $http.post(self.url,{userName:$scope.newlogin.userName,password:$scope.newlogin.password})
-  .success(function(data){
-    $scope.answer = data;
-    alert(data);
-    self.getUser += $scope.newlogin.userName;
-    $rootScope.currentUser = $scope.newlogin.userName;
-
-    //alert(self.getUser);
-    $http.get(self.getUser).success(function(userData){
-      var user = userData['0'];
-      console.log(user['userName']);
-      $location.path('postLoginPage')
-    });
-  }).error(function (data) {
+  $scope.login = function(){
+    //alert($scope.newlogin.userName); alert to check the name of the user
+    //alert($scope.newlogin.password.length); for checking length
+    $http.post(self.url,{userName:$scope.newlogin.userName,password:$scope.newlogin.password})
+    .success(function(data){
+      $scope.answer = data;
       alert(data);
+      self.getUser += $scope.newlogin.userName;
+      $rootScope.currentUser = $scope.newlogin.userName;
 
-});
-}
+      //alert(self.getUser);
+      $http.get(self.getUser).success(function(userData){
+        var user = userData['0'];
+        alert(user['lastLogin']);
+        $rootScope.currentUser += ' ';
+        $rootScope.currentUser += user['lastLogin'];
+        $location.path('postLoginPage')
+      });
+    }).error(function (data) {
+        alert(data);
+
+  });
+  }
 }]); //controller ends
 
 myStore.controller('postLoginPageCtrl',['$scope','$http','$location','$rootScope',function($scope,$http,$location,$rootScope){
