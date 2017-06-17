@@ -15,9 +15,10 @@ myStore.config(['$routeProvider',function($routeProvider){
   })
   .when('/postLoginPage',{
     templateUrl: 'views/postLoginPage.html',
+    controller: 'postLoginPageCtrl'
   })
   .when('/about',{
-    templateUrl: 'views/about.html',    
+    templateUrl: 'views/about.html',
   })
   .otherwise({
     redirectTo: '/'
@@ -55,8 +56,7 @@ myStore.controller('StoreController',['$scope','$http',function($scope,$http){
 myStore.controller('LoginController',['$scope','$http','$location',function($scope,$http,$location){
   self.url = 'http://localhost:5001/users/login';
   self.getUser = 'http://localhost:5001/users/getUserByID?userName=';
-$scope.login = function()
-{
+$scope.login = function(){
   //alert($scope.newlogin.userName); alert to check the name of the user
   //alert($scope.newlogin.password.length); for checking length
   $http.post(self.url,{userName:$scope.newlogin.userName,password:$scope.newlogin.password})
@@ -73,8 +73,27 @@ $scope.login = function()
   }).error(function (data) {
       alert(data);
 });
-
-
 }
+}]); //controller ends
+
+myStore.controller('postLoginPageCtrl',['$scope','$http','$location',function($scope,$http,$location){
+self.url = 'http://localhost:5001/users/getRecomandation?userName=Amit';
+self.url2 = 'http://localhost:5001/games/topfivegames';
+self.url3 = 'http://localhost:5001/games/getLastMonthItems';
+
+$http.get(self.url).success(function(data)
+{
+  $scope.Recgames=data;
+  $http.get(self.url2).success(function(recData)
+  {
+    $scope.topGames=recData;
+    $http.get(self.url3).success(function(lastMonth)
+    {
+      $scope.MonthGames=lastMonth;      
+    });
+  });
+});
+
+
 
 }]);
