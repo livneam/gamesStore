@@ -149,7 +149,7 @@ main.ng-enter.ng-enter-active{
 }
 
 #game-list li.ng-enter.ng-enter-active{
-  opacity: 1;
+  opacity:1;
   transform: translateY(0px);
 }
 
