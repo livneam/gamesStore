@@ -31,10 +31,13 @@ myStore.config(['$routeProvider',function($routeProvider){
 
 myStore.controller('StoreController',['$scope','$http','$rootScope',function($scope,$http,$rootScope){
   self.url = 'http://localhost:5001/games/getAll_Items';
+  console.log("test" + $rootScope.currentUser);
   $http.get(self.url).success(function(data)
   {
     $scope.games=data;
-    self.url2 = 'http://localhost:5001/users/getRecomandation?userName=pavel'; //todo: change to be according to userName;
+    self.url2 = 'http://localhost:5001/users/getRecomandation?userName='; //todo: change to be according to userName;
+
+    self.url2 += $rootScope.currentUser;
     $http.get(self.url2).success(function(data)
     {
       $scope.Recgames=data;
@@ -82,14 +85,17 @@ myStore.controller('LoginController',['$scope','$http','$location','$rootScope',
       $scope.answer = data;
       alert(data);
       self.getUser += $scope.newlogin.userName;
+      console.log(self.getUser);
       $rootScope.currentUser = $scope.newlogin.userName;
 
       //alert(self.getUser);
       $http.get(self.getUser).success(function(userData){
-        var user = userData['0'];
-        alert(user['lastLogin']);
-        $rootScope.currentUser += ' ';
-        $rootScope.currentUser += user['lastLogin'];
+        console.log(userData);
+        let user = userData['0'];
+        console.log(user);
+        //alert(user['lastLogin']);
+        $rootScope.lastLoginTime = ' '
+        $rootScope.lastLoginTime += Date(user['lastLogin']);
         $location.path('postLoginPage')
       });
     }).error(function (data) {
@@ -105,6 +111,7 @@ myStore.controller('postLoginPageCtrl',['$scope','$http','$location','$rootScope
   }
   self.url2 = 'http://localhost:5001/games/topfivegames';
   self.url3 = 'http://localhost:5001/games/getLastMonthItems';
+
 
   $http.get(self.url2).success(function(recData){
       $scope.topGames=recData;
